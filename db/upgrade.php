@@ -55,7 +55,7 @@ function xmldb_report_customsql_upgrade($oldversion) {
         if ($dbman->table_exists($table)) {
 
             // Define and add the field 'at'.
-            $field = new xmldb_field('at', XMLDB_TYPE_CHAR, '16', null, XMLDB_NOTNULL, null, null, 'singlerow');
+            $field = new xmldb_field('at', XMLDB_TYPE_CHAR, '16', null, XMLDB_NOTNULL, null, null, 'singlerow'); 
             if (!$dbman->field_exists($table, $field)) {
                 $dbman->add_field($table, $field);
             }
@@ -171,6 +171,16 @@ function xmldb_report_customsql_upgrade($oldversion) {
         }
 
         upgrade_plugin_savepoint(true, 2016011800, 'report', 'customsql');
+    }
+    if ($oldversion < 2018011100) {
+        // Define field customdir to be added to report_customsql_queries.
+        $table = new xmldb_table('report_customsql_queries');
+        $field = new xmldb_field('queryoffset', XMLDB_TYPE_INTEGER, '10', null, true, false, 0, 'customdir');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2018011100, 'report', 'customsql');
     }
 
     return true;

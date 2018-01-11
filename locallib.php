@@ -26,13 +26,13 @@ define('REPORT_CUSTOMSQL_MAX_RECORDS', 5000);
 define('REPORT_CUSTOMSQL_START_OF_WEEK', 6); // Saturday.
 
 function report_customsql_execute_query($sql, $params = null,
-        $limitnum = REPORT_CUSTOMSQL_MAX_RECORDS) {
+        $limitnum = REPORT_CUSTOMSQL_MAX_RECORDS, $offset=0) {
     global $CFG, $DB;
 
     $sql = preg_replace('/\bprefix_(?=\w+)/i', $CFG->prefix, $sql);
 
     // Note: throws Exception if there is an error.
-    return $DB->get_recordset_sql($sql, $params, 0, $limitnum);
+    return $DB->get_recordset_sql($sql, $params, $offset, $limitnum);
 }
 
 function report_customsql_prepare_sql($report, $timenow) {
@@ -77,7 +77,8 @@ function report_customsql_generate_csv($report, $timenow) {
 
     $queryparams = !empty($report->queryparams) ? unserialize($report->queryparams) : array();
     $querylimit  = !empty($report->querylimit) ? $report->querylimit : REPORT_CUSTOMSQL_MAX_RECORDS;
-    $rs = report_customsql_execute_query($sql, $queryparams, $querylimit);
+    $queryoffset  = !empty($report->queryoffset) ? $report->queryoffset : 0;
+    $rs = report_customsql_execute_query($sql, $queryparams, $querylimit, $queryoffset);
 
     $csvfilenames = array();
     $csvtimestamp = null;

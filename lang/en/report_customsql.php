@@ -111,6 +111,7 @@ $string['query_edited'] = 'Query edited';
 $string['query_viewed'] = 'Query viewed';
 $string['queryfailed'] = 'Error when executing the query: {$a}';
 $string['querylimit'] = 'Limit rows returned';
+$string['queryoffset'] = 'Offset results';
 $string['querylimitrange'] = 'Number must be between 1 and {$a}';
 $string['querynote'] = '<ul>
 <li>The token <tt>%%WWWROOT%%</tt> in the results will be replaced with <tt>{$a}</tt>.</li>

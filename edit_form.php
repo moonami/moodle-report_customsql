@@ -84,6 +84,12 @@ class report_customsql_edit_form extends moodleform {
         $mform->addRule('querylimit', get_string('requireint', 'report_customsql'),
                         'numeric', null, 'client');
 
+        $mform->addElement('text', 'queryoffset', get_string('queryoffset', 'report_customsql'));
+        $mform->setType('queryoffset', PARAM_INT);
+        $mform->setDefault('queryoffset', 0);
+        $mform->addRule('queryoffset', get_string('requireint', 'report_customsql'),
+                        'numeric', null, 'client');
+
         $runat = array();
         if ($hasparameters) {
             $runat[] = $mform->createElement('select', 'runable', null,  report_customsql_runable_options('manual'));
